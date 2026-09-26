@@ -1,0 +1,21 @@
+{
+  "name": "forge-cli-agent",
+  "version": "0.1.0",
+  "description": "An early-stage open-source AI chat CLI for developers.",
+  "type": "module",
+  "bin": {
+    "forge": "src/cli/index.js"
+  },
+  "scripts": {
+    "start": "node src/cli/index.js",
+    "gui": "node src/gui/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "openai": "^4.77.0"
+  }
+}
