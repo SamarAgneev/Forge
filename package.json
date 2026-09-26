@@ -1,7 +1,30 @@
 {
   "name": "forge-cli-agent",
   "version": "0.1.0",
-  "description": "An early-stage open-source AI chat CLI for developers.",
+  "description": "An approval-gated AI coding agent for repository-aware terminal development.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamarAgneev/Forge.git"
+  },
+  "homepage": "https://github.com/SamarAgneev/Forge#readme",
+  "bugs": {
+    "url": "https://github.com/SamarAgneev/Forge/issues"
+  },
+  "keywords": [
+    "ai-coding-agent",
+    "cli",
+    "developer-tools",
+    "openai",
+    "local-llm",
+    "code-assistant"
+  ],
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
   "type": "module",
   "bin": {
     "forge": "src/cli/index.js"
