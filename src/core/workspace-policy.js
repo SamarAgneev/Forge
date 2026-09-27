@@ -124,8 +124,16 @@ function isWithinRoot(root, candidate) {
 export class WorkspacePolicy {
   constructor(root, { state = { remainingBytes: DEFAULT_IGNORE_BUDGET } } = {}) {
     this.root = resolve(root);
+    this.canonicalRootPromise = null;
     this.state = state;
     this.ruleCache = new Map();
+  }
+
+  async canonicalRoot() {
+    if (!this.canonicalRootPromise) {
+      this.canonicalRootPromise = realpath(this.root).catch(() => this.root);
+    }
+    return this.canonicalRootPromise;
   }
 
   isSensitiveName(name) {
@@ -227,7 +235,7 @@ export class WorkspacePolicy {
       }
       const details = await lstat(absolutePath);
       const canonicalPath = await realpath(absolutePath);
-      if (!isWithinRoot(this.root, canonicalPath)) return { ok: false, error: 'Path is outside the workspace.' };
+      if (!isWithinRoot(await this.canonicalRoot(), canonicalPath)) return { ok: false, error: 'Path is outside the workspace.' };
       return { ok: true, path: relativePath || '.', absolutePath, details };
     } catch (error) {
       if (error?.code === 'ENOENT' || error?.code === 'ENOTDIR') {
@@ -291,7 +299,7 @@ export class WorkspacePolicy {
       }
 
       const canonicalParent = await realpath(currentPath);
-      if (!isWithinRoot(this.root, canonicalParent)) return { ok: false, path: relativePath, error: 'Path is outside the workspace.' };
+  if (!isWithinRoot(await this.canonicalRoot(), canonicalParent)) return { ok: false, path: relativePath, error: 'Path is outside the workspace.' };
       const isIgnored = await this.isPathIgnored(relativePath, details?.isDirectory() ?? false);
       if (isIgnored && !allowIgnored) return { ok: false, path: relativePath, error: 'This path is ignored by workspace rules.' };
       return {

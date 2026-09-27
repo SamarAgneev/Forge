@@ -322,7 +322,7 @@ export class TerminalTool {
         started: true,
         success: true,
         command: classification.display,
-        workingDirectory: this.relativeWorkingDirectory(cwd.path),
+        workingDirectory: cwd.relativePath,
         stdout: `${cwd.path}\n`,
         stderr: '',
         exitCode: 0,
@@ -419,7 +419,7 @@ export class TerminalTool {
     return {
       started: !spawnError,
       command: classification.display,
-      workingDirectory: this.relativeWorkingDirectory(cwd.path),
+      workingDirectory: cwd.relativePath,
       stdout,
       stderr,
       exitCode: spawnError ? null : commandResult,
@@ -445,11 +445,11 @@ export class TerminalTool {
     if (canonicalRelative && await this.policy.isPathIgnored(canonicalRelative, true)) {
       return { ok: false, error: 'Command working directory is ignored by workspace rules.' };
     }
-    return { ok: true, path: canonicalPath };
-  }
-
-  relativeWorkingDirectory(path) {
-    return relative(this.workspaceRoot, path).split(sep).join('/') || '.';
+    return {
+      ok: true,
+      path: canonicalPath,
+      relativePath: canonicalRelative.split(sep).join('/') || '.'
+    };
   }
 
   async resolveExecutable(executable) {
