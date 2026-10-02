@@ -2,7 +2,7 @@
 
 Forge is an open-source AI coding agent foundation. Today, it provides an interactive terminal conversation with an AI model and keeps conversation context for the current run.
 
-## CURRENT FEATURES
+## Features
 
 - Interactive conversation using OpenAI or a local OpenAI-compatible chat-completions endpoint.
 - In-memory conversation history for the current session.

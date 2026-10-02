@@ -1,6 +1,27 @@
-node_modules/
+# Local environment and credentials
 .env
 .env.*
 !.env.example
+.npmrc
+!.npmrc.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+credentials*.json
+secrets*.json
+service-account*.json
+serviceAccountKey*.json
+
+# Generated artifacts
+node_modules/
 coverage/
+dist/
+build/
+*.log
+npm-debug.log*
+
+# Operating system files
 .DS_Store
+Thumbs.db
